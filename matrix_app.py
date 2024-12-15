@@ -1,13 +1,30 @@
+import numpy as np
+
 def input_matrices():
-    pass  # Заглушка для ввода матриц
+    size = int(input("Введите размер матриц: "))
+    matrix1 = []
+    matrix2 = []
+    
+    print("Введите элементы первой матрицы:")
+    for i in range(size):
+        row = list(map(int, input().split()))
+        matrix1.append(row)
+    
+    print("Введите элементы второй матрицы:")
+    for i in range(size):
+        row = list(map(int, input().split()))
+        matrix2.append(row)
+    
+    return np.array(matrix1), np.array(matrix2)
 
 def add_matrices(matrix1, matrix2):
-    return "образец"  # Заглушка для сложения матриц
+    return matrix1 + matrix2
 
 def calculate_determinant(matrix):
-    return "образец"  # Заглушка для вычисления определителя
+    return np.linalg.det(matrix)
 
 def main_menu():
+    matrix1 = matrix2 = None
     while True:
         print("1. Ввод исходных данных")
         print("2. Выполнение алгоритма")
@@ -18,11 +35,21 @@ def main_menu():
         if choice == '4':
             break
         elif choice == '1':
-            input_matrices()
+            matrix1, matrix2 = input_matrices()
         elif choice == '2':
-            add_matrices([], [])  # Временные пустые матрицы
+            if matrix1 is not None and matrix2 is not None:
+                result_matrix = add_matrices(matrix1, matrix2)
+                determinant_matrix1 = calculate_determinant(matrix1)
+                determinant_matrix2 = calculate_determinant(matrix2)
+            else:
+                print("Сначала введите матрицы.")
         elif choice == '3':
-            calculate_determinant([])  # Временная пустая матрица
+            if 'result_matrix' in locals():
+                print("Сумма матриц:\n", result_matrix)
+                print("Определитель первой матрицы:", determinant_matrix1)
+                print("Определитель второй матрицы:", determinant_matrix2)
+            else:
+                print("Сначала выполните алгоритм.")
 
 if __name__ == "__main__":
     main_menu()
